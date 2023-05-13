@@ -4,10 +4,8 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
   Text,
   Flex,
 } from "@chakra-ui/react";
@@ -22,7 +20,6 @@ const AuthModal: React.FC = () => {
       open: false,
     }));
   };
-  // const auth = modalState.View === "login"
   return (
     <>
       <Modal isOpen={modalState.open} onClose={handleClose}>
@@ -31,13 +28,13 @@ const AuthModal: React.FC = () => {
           <ModalHeader></ModalHeader>
           <ModalCloseButton />
           <ModalBody maxW={"90%"} mx="auto" mt="50px">
-            <Text fontSize={"20px"} mb="5px">
+            <Text fontSize={"25px"} mb="5px" fontWeight={600}>
               {modalState.View === "login" && "Log In"}
               {modalState.View === "signup" && "Sign Up"}
               {modalState.View === "resetusername" && "Recover your username"}
               {modalState.View === "resetpassword" && "Reser your password"}
             </Text>
-            <Text fontSize={"12px"} mb="20px">
+            <Text fontSize={"16px"} mb="20px">
               {modalState.View === "login" &&
                 "By continuing, you are setting up a Reddit account and agree to our User Agreement and Privacy Policy."}
               {modalState.View === "signup" &&

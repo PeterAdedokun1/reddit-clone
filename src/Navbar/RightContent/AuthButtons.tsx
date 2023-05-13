@@ -12,6 +12,7 @@ const AuthButtons: React.FC = () => {
         py={0}
               px={"50px"}
               bg="red"
+                   onClick={() => setAuthModalState({ open: true, View: "signup" })}
       >
         Get App
       </Button>

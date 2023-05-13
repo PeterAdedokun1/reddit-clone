@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { Input, Button, Text, Stack } from "@chakra-ui/react";
+import { AuthModalState } from "@/atoms/AuthModalAtom";
+import { useSetRecoilState } from "recoil";
 const Login = () => {
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
   });
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLoginForm(prev => ({
-            ...prev,
-            [event.target.name] : event.target.value
-       }))
-    }
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginForm((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+  const setAuthModalState = useSetRecoilState(AuthModalState);
   return (
     <Stack>
       <form action="">
@@ -23,6 +27,8 @@ const Login = () => {
           bg={"#EDEFF1"}
           _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
           onChange={onChange}
+          required
+          height={"50px"}
         />
         <Input
           name="password"
@@ -31,8 +37,10 @@ const Login = () => {
           borderRadius={"30px"}
           _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
           onChange={onChange}
+          required
+          height={"50px"}
         />
-        <Text fontSize={"13px"} pt="20px">
+        <Text fontSize={"16px"} pt="20px">
           Forgot your{" "}
           <span
             style={{
@@ -51,7 +59,7 @@ const Login = () => {
               fontWeight: "bolder",
             }}
           >
-            password
+            Password
           </span>
           ?
         </Text>
@@ -64,14 +72,21 @@ const Login = () => {
           Login
         </Button>
       </form>
-      <Text fontSize={"13px"}>
+      <Text fontSize={"16px"}>
         New to Reddit{" "}
         <span
           style={{
             textDecoration: "underline",
             color: "#0079D3",
-            fontWeight: "bolder",
+                      fontWeight: "bolder",
+            cursor: "pointer"
           }}
+          onClick={() =>
+            setAuthModalState((prev) => ({
+              ...prev,
+              View: "signup",
+            }))
+          }
         >
           Sign up
         </span>
