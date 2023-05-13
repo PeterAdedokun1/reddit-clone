@@ -16,7 +16,8 @@ const SearchInput: React.FC<SearchInput> = () => {
         <Input
           placeholder="Search Reddit"
           borderRadius={"20px"}
-          fontSize={"10pt"}
+                  fontSize={"10pt"}
+                  bg={"F6F7F8"}
           _placeholder={{ color: "gray.500" }}
           _hover={{
             bg: "white",
