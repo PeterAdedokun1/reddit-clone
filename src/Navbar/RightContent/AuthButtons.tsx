@@ -1,15 +1,26 @@
 import React from 'react'
 import {Button,Flex} from "@chakra-ui/react"
-const AuthButtons:React.FC = () => {
+import { AuthModalState } from '@/atoms/AuthModalAtom';
+import {useSetRecoilState} from "recoil"
+const AuthButtons: React.FC = () => {
+    const setAuthModalState = useSetRecoilState(AuthModalState)
   return (
-    <Flex display={{ base: "none", md: "unset" }} gap={"20px"}>
-      <Button bg="#0F1A1C" padding={"0px 40px"} mr="20px">
+    <Flex display={{ base: "none", md: "unset" }} >
+      <Button
+        padding={"0px 40px"}
+        mr="20px"
+        py={0}
+              px={"50px"}
+              bg="red"
+      >
         Get App
       </Button>
       <Button
         bg="#ff4500"
         _hover={{ backgroundColor: "none" }}
-        padding={"0px 40px"}
+        py={0}
+        px={"50px"}
+        onClick={() => setAuthModalState({ open: true, View: "login" })}
       >
         Log In
       </Button>

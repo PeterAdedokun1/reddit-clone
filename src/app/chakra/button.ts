@@ -8,6 +8,7 @@ export const Button: ComponentStyleConfig = {
         fontSize: "10pt",
         fontWeight: 700,
         color: "white",
+        p: 0,
         _focus: {
             boxShadow: "none",
         },
@@ -21,21 +22,5 @@ export const Button: ComponentStyleConfig = {
             // height: "28px",
         },
     },
-    variants: {
-        solid: {
-            color: "white",
-            // bg: "blue.500",
-
-        },
-        outline: {
-            color: "blue.500",
-            border: "1px solid",
-         
-        },
-        oauth: {
-            height: "34px",
-            border: "1px solid",
-          
-        },
-    },
+   
 };
