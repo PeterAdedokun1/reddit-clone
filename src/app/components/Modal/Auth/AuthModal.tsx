@@ -8,35 +8,50 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Text,
+  Flex,
 } from "@chakra-ui/react";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
-import {useRecoilState} from "recoil"
+import { useRecoilState } from "recoil";
+import AuthInput from "./AuthInput";
 const AuthModal: React.FC = () => {
-    const [modalState, setModalState] = useRecoilState(AuthModalState)
-    const handleClose = () => {
-        setModalState(prev => ({
-            ...prev,
-            open: false
-        }))
-    }
+  const [modalState, setModalState] = useRecoilState(AuthModalState);
+  const handleClose = () => {
+    setModalState((prev) => ({
+      ...prev,
+      open: false,
+    }));
+  };
+  // const auth = modalState.View === "login"
   return (
     <>
-      <Modal isOpen={modalState.open} onClose={handleClose} >
+      <Modal isOpen={modalState.open} onClose={handleClose}>
         <ModalOverlay />
-        <ModalContent>  
-                  <ModalHeader>
-                      {modalState.View === "login" && "Login"}
-                      {modalState.View === "signup" && "SignUp"}
-                      {modalState.View === "resetusername" && "Recover your username"}
-                      {modalState.View === "resetpassword" && "Reser your password"}
-
-                  </ModalHeader>
+        <ModalContent>
+          <ModalHeader></ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            Here is the modal boyd
+          <ModalBody maxW={"90%"} mx="auto" mt="50px">
+            <Text fontSize={"20px"} mb="5px">
+              {modalState.View === "login" && "Log In"}
+              {modalState.View === "signup" && "Sign Up"}
+              {modalState.View === "resetusername" && "Recover your username"}
+              {modalState.View === "resetpassword" && "Reser your password"}
+            </Text>
+            <Text fontSize={"12px"} mb="20px">
+              {modalState.View === "login" &&
+                "By continuing, you are setting up a Reddit account and agree to our User Agreement and Privacy Policy."}
+              {modalState.View === "signup" &&
+                "By continuing, you are setting up a Reddit account and agree to our User Agreement and Privacy Policy."}
+              {modalState.View === "resetpassword" &&
+                "Tell us the username and email address associated with your Reddit account, and we’ll send you an email with a link to reset your password."}
+              {modalState.View === "resetusername" &&
+                "Tell us the email address associated with your Reddit account, and we’ll send you an email with your username"}
+            </Text>
+            <Flex direction={"column"} align={"center"} justify={"center"}>
+              {/* <OAuthButtons/> */}
+              <AuthInput />
+            </Flex>
           </ModalBody>
-
-    
         </ModalContent>
       </Modal>
     </>
