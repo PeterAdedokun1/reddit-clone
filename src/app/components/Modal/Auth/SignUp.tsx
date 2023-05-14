@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, Flex, Input, Button, Stack } from "@chakra-ui/react";
+import { Text,  Input,  Stack } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import * as yup from "yup";
@@ -20,7 +20,6 @@ const SignUp = () => {
         email: "",
       },
       onSubmit: (values) => {
-        // values.preventDefault()
         console.log(values);
       },
       validationSchema: validateSchema,
@@ -62,7 +61,7 @@ const SignUp = () => {
               onBlur={handleBlur}
             />
             {errors.email && <Text color={"red"} fontSize={"12px"}>{errors.email}</Text>}
-            {isValid && dirty && <Text>This is valid</Text>}
+            {isValid && dirty && <Text fontSize={"12px"}>This is valid</Text>}
             <button
               style={{
                 width: "100%",
