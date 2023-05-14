@@ -27,7 +27,7 @@ const AuthModal: React.FC = () => {
         <ModalContent>
           <ModalHeader></ModalHeader>
           <ModalCloseButton />
-          <ModalBody maxW={"90%"} mx="auto" mt="50px">
+          <ModalBody maxW={"90%"} mx="auto" my="50px">
             <Text fontSize={"25px"} mb="5px" fontWeight={600}>
               {modalState.View === "login" && "Log In"}
               {modalState.View === "signup" && "Sign Up"}

@@ -1,0 +1,10 @@
+input::placeholder{
+     transition: transform 0.3s ease;
+}
+input:hover::placeholder,
+input:focus::placeholder {
+  transform: translateY(-10px);
+}
+/* input:hover{
+    border: 1px solid red;
+} */

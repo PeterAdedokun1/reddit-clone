@@ -23,23 +23,35 @@ const Login = () => {
           placeholder="Username"
           type="text"
           borderRadius={"30px"}
-          mb="10px"
+          // mb="5px"
           bg={"#EDEFF1"}
           _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
           onChange={onChange}
           required
           height={"50px"}
+          maxLength={20}
         />
+        {loginForm.username.length < 3 && (
+          <span style={{ color: "red", fontSize: "14px", marginLeft: "20px" }}>
+            Username must be between 3 and 20 characters
+          </span>
+        )}
+
         <Input
           name="password"
-          placeholder="password"
-          type="email"
+          placeholder="Password"
+          type="password"
           borderRadius={"30px"}
           _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
           onChange={onChange}
           required
           height={"50px"}
+          mt="15px"
+          // bg={`${loginForm.password === "" ?"#EDEFF1" : "#E8FOFE" }`}
+          // bg={`${loginForm.password === "" ? "#EDEFF1" : "red"}`}
         />
+    
+
         <Text fontSize={"16px"} pt="20px">
           Forgot your{" "}
           <span
@@ -59,7 +71,7 @@ const Login = () => {
               fontWeight: "bolder",
             }}
           >
-            Password
+            password
           </span>
           ?
         </Text>
@@ -78,8 +90,8 @@ const Login = () => {
           style={{
             textDecoration: "underline",
             color: "#0079D3",
-                      fontWeight: "bolder",
-            cursor: "pointer"
+            fontWeight: "bolder",
+            cursor: "pointer",
           }}
           onClick={() =>
             setAuthModalState((prev) => ({
