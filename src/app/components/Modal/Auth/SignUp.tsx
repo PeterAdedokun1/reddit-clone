@@ -61,7 +61,7 @@ const SignUp = () => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.email && <Text color={"red"}>{errors.email}</Text>}
+            {errors.email && <Text color={"red"} fontSize={"12px"}>{errors.email}</Text>}
             {isValid && dirty && <Text>This is valid</Text>}
             <button
               style={{

@@ -68,7 +68,7 @@ const Login = () => {
           mt="15px"
         />
 
-        <Text fontSize={"12px"} pt="20px">
+        <Text fontSize={"13px"} pt="20px">
           Forgot your{" "}
           <span
             style={{
@@ -100,7 +100,7 @@ const Login = () => {
           Login
         </Button>
       </form>
-      <Text fontSize={"12px"}>
+      <Text fontSize={"13px"}>
         New to Reddit{" "}
         <span
           style={{

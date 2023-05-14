@@ -38,7 +38,7 @@ const AuthModal: React.FC = () => {
               {modalState.View === "resetusername" && "Recover your username"}
               {modalState.View === "resetpassword" && "Reser your password"}
             </Text>
-            <Text fontSize={"12px"} mb="20px">
+            <Text fontSize={"13px"} mb="20px">
               {modalState.View === "login" &&
                 "By continuing, you are setting up a Reddit account and agree to our User Agreement and Privacy Policy."}
              
