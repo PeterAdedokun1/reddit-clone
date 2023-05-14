@@ -1,46 +1,74 @@
 import React, { useState } from "react";
-import { Text, Flex, Input, Button, Stack,} from "@chakra-ui/react";
+import { Text, Flex, Input, Button, Stack } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
-import * as Yup from "yup";
+import * as yup from "yup";
+import { Formik, useFormik } from "formik";
+// const formik = usefor
+// import { object, string, number, date, InferType } from "yup";
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
-  const validationSchema = Yup.object({
-    email: Yup.string().required("Email is required").email("Invalid email"),
-    password: Yup.string().required("Password is required"),
+
+  const validateSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Not a valid email address")
+      .required("Please enter an email address to continue"),
   });
 
-  const initialValues = {
-    email: "",
-    password: "",
-  };
+  const { handleBlur, handleChange, isSubmitting ,  handleSubmit, errors, values, touched , isValid ,dirty} =
+    useFormik({
+      initialValues: {
+        email: "",
+      },
+      onSubmit: (values) => {
+        // values.preventDefault()
+        console.log(values);
+      },
+      validationSchema: validateSchema,
+    });
 
-  const createUser = (e: any) => {
-    e.preventDefault();
-    let formData = {
-      email: e.target[0].value,
-    };
-    console.log(formData);
-  };
 
   return (
     <Stack>
-      <form onSubmit={createUser}>
-        <Input
-          name="name"
-          placeholder="Email"
+      <form onSubmit={handleSubmit} autoComplete="off" style={{width: "100%"}}>
+        <input
           type="text"
-          borderRadius={"30px"}
-          bg={"#EDEFF1"}
-          _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
-          // required
-          height={"50px"}
-          width={"100%"}
+          name="email"
+          style={{
+            background: "#EDEFF1",
+            height: "50px",
+            width: "100%",
+            borderRadius: "20px",
+            outline: "none",
+            padding: "10px 50px",
+            borderColor: `${errors.email  ? "red" : ""}`,
+            borderWidth: "2px"
+          }}
+          placeholder="Email"
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
-      
-
-    
-        <button style={{width: "100%", background: "#ff4500", marginTop: "30px", marginBottom: "30px", height: "40px", borderRadius: "20px", color: "white", fontSize: "20px"}}>continue</button>
+        {
+          errors.email && <Text color={"red"}>{errors.email }</Text>
+}
+        <button
+          style={{
+            width: "100%",
+            background: `${isValid && dirty ? "red" : "blue"}`,
+            marginTop: "30px",
+            marginBottom: "30px",
+            height: "40px",
+            borderRadius: "20px",
+            color: "white",
+            fontSize: "20px",
+          }}
+          // disabled={isSubmitting}
+          disabled={!(isValid && dirty) }
+        >
+          continue
+        </button>
       </form>
       <Text fontSize={"16px"}>
         Already a redditor
@@ -67,3 +95,29 @@ const SignUp = () => {
 };
 
 export default SignUp;
+// {
+/* <Input
+          as={"input"}
+          // name="name"
+          name="email"
+          placeholder="Email"
+          type="text"
+          borderRadius={"30px"}
+          bg={"#EDEFF1"}
+          // _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
+          // required
+          // focusBorderColor="lime"
+          height={"50px"}
+          width={"100%"}
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          borderWidth={"1px"}
+          // borderColor={"red"}
+          // focusBorderColor="blue"
+          // focusBorderColor="red"
+          focusBorderColor={
+            errors && touched ? "red.300" : "lime"
+          }
+        /> */
+// }
