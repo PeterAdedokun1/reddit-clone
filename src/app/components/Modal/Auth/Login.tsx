@@ -28,7 +28,7 @@ const Login = () => {
     onSubmit: (values) => {
       console.log(values);
     },
-    validationSchema: validateSchema
+    validationSchema: validateSchema,
   });
   const setAuthModalState = useSetRecoilState(AuthModalState);
   return (
@@ -52,10 +52,11 @@ const Login = () => {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        {
-          errors.username && touched.username && <Text color="red" fontSize={"12px"}>{errors.username }</Text>
-        }
-       
+        {errors.username && touched.username && (
+          <Text color="red" fontSize={"12px"}>
+            {errors.username}
+          </Text>
+        )}
 
         <Input
           name="password"
@@ -75,7 +76,15 @@ const Login = () => {
               textDecoration: "underline",
               color: "#0079D3",
               fontWeight: "bolder",
+              cursor: "pointer",
             }}
+
+            onClick={() =>
+              setAuthModalState((prev) => ({
+                ...prev,
+                View: "resetusername",
+              }))
+            }
           >
             username
           </span>{" "}
@@ -85,7 +94,14 @@ const Login = () => {
               textDecoration: "underline",
               color: "#0079D3",
               fontWeight: "bolder",
+              cursor: "pointer",
             }}
+            onClick={() =>
+              setAuthModalState((prev) => ({
+                ...prev,
+                View: "resetpassword",
+              }))
+            }
           >
             password
           </span>
@@ -124,5 +140,3 @@ const Login = () => {
 };
 
 export default Login;
-
-

@@ -36,7 +36,7 @@ const AuthModal: React.FC = () => {
             <Text fontSize={"20px"} mb="5px" fontWeight={600}>
               {modalState.View === "login" && "Log In"}
               {modalState.View === "resetusername" && "Recover your username"}
-              {modalState.View === "resetpassword" && "Reser your password"}
+              {modalState.View === "resetpassword" && "Reset your password"}
             </Text>
             <Text fontSize={"13px"} mb="20px">
               {modalState.View === "login" &&
