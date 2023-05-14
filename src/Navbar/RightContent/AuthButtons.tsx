@@ -5,14 +5,16 @@ import {useSetRecoilState} from "recoil"
 const AuthButtons: React.FC = () => {
     const setAuthModalState = useSetRecoilState(AuthModalState)
   return (
-    <Flex display={{ base: "none", md: "unset" }} >
+    <Flex display={{ base: "none", md: "unset" }}>
       <Button
         padding={"0px 40px"}
-        mr="20px"
+        mr="15px"
         py={0}
-              px={"50px"}
-              bg="red"
-                   onClick={() => setAuthModalState({ open: true, View: "signup" })}
+        px={"40px"}
+        height={"35px"}
+        bg="#030303"
+        _hover={{ backgroundColor: "none" }}
+        onClick={() => setAuthModalState({ open: true, View: "signup" })}
       >
         Get App
       </Button>
@@ -20,7 +22,8 @@ const AuthButtons: React.FC = () => {
         bg="#ff4500"
         _hover={{ backgroundColor: "none" }}
         py={0}
-        px={"50px"}
+        height={"35px"}
+        px={"40px"}
         onClick={() => setAuthModalState({ open: true, View: "login" })}
       >
         Log In

@@ -26,26 +26,22 @@ const AuthModal: React.FC = () => {
         isOpen={modalState.open}
         onClose={handleClose}
         closeOnOverlayClick={false}
+        
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent maxW={"400px"} mx="auto" borderRadius={"10px"}>
           <ModalHeader></ModalHeader>
           <ModalCloseButton />
-          <ModalBody
-            // maxW={"90%"} mx="auto"
-            my="50px"
-          >
-            <Text fontSize={"25px"} mb="5px" fontWeight={600}>
+          <ModalBody my="30px">
+            <Text fontSize={"20px"} mb="5px" fontWeight={600}>
               {modalState.View === "login" && "Log In"}
-              {/* {modalState.View === "signup" && "Sign Up"} */}
               {modalState.View === "resetusername" && "Recover your username"}
               {modalState.View === "resetpassword" && "Reser your password"}
             </Text>
-            <Text fontSize={"16px"} mb="20px">
+            <Text fontSize={"12px"} mb="20px">
               {modalState.View === "login" &&
                 "By continuing, you are setting up a Reddit account and agree to our User Agreement and Privacy Policy."}
-              {/* {modalState.View === "signup" &&
-                "By continuing, you are setting up a Reddit account and agree to our User Agreement and Privacy Policy."} */}
+             
               {modalState.View === "resetpassword" &&
                 "Tell us the username and email address associated with your Reddit account, and we’ll send you an email with a link to reset your password."}
               {modalState.View === "resetusername" &&

@@ -11,9 +11,7 @@ export const theme = extendTheme({
     },
     fonts: {
         body: "Noto Sans, sans-serif"
-            // "IBMPlexSans, Arial , sans-serif"
-            // 'Source Sans Pro sans-serif'
-            // "Open Sans,sans-serif",
+        
     },
     styles: {
         global: () => ({

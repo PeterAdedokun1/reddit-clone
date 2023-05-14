@@ -53,7 +53,7 @@ const Login = () => {
           onBlur={handleBlur}
         />
         {
-          errors.username && touched.username && <Text color="red">{errors.username }</Text>
+          errors.username && touched.username && <Text color="red" fontSize={"12px"}>{errors.username }</Text>
         }
        
 
@@ -68,7 +68,7 @@ const Login = () => {
           mt="15px"
         />
 
-        <Text fontSize={"16px"} pt="20px">
+        <Text fontSize={"12px"} pt="20px">
           Forgot your{" "}
           <span
             style={{
@@ -100,7 +100,7 @@ const Login = () => {
           Login
         </Button>
       </form>
-      <Text fontSize={"16px"}>
+      <Text fontSize={"12px"}>
         New to Reddit{" "}
         <span
           style={{
@@ -125,14 +125,4 @@ const Login = () => {
 
 export default Login;
 
-//  <Input
-//    name="username"
-//    placeholder="Username"
-//    type="text"
-//    borderRadius={"30px"}
-//    bg={"#EDEFF1"}
-//    _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
-//    required
-//    height={"50px"}
-//    maxLength={20}
-//  />;
+

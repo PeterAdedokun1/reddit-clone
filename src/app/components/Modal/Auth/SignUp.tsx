@@ -4,8 +4,6 @@ import { useSetRecoilState } from "recoil";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import * as yup from "yup";
 import { Formik, useFormik } from "formik";
-// const formik = usefor
-// import { object, string, number, date, InferType } from "yup";
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
   const [stepCount, SetStepCount] = useState(0)
@@ -33,10 +31,10 @@ const SignUp = () => {
     <>
       {stepCount === 0 && (
         <Stack>
-          <Text fontSize={"25px"} mb="5px" fontWeight={600}>
+          <Text fontSize={"20px"} mb="5px" fontWeight={600}>
             Sign Up
           </Text>
-          <Text fontSize={"16px"} mb="20px">
+          <Text fontSize={"13px"} mb="20px">
             By continuing, you are setting up a Reddit account and agree to our
             User Agreement and Privacy Policy.
           </Text>
@@ -83,7 +81,7 @@ const SignUp = () => {
               continue
             </button>
           </form>
-          <Text fontSize={"16px"}>
+          <Text fontSize={"13px"}>
             Already a redditor
             <span
               style={{
@@ -107,7 +105,7 @@ const SignUp = () => {
       )}
       {stepCount === 1 && (
         <Stack>
-          <Text fontSize={"25px"} mb="5px" fontWeight={600}>
+          <Text fontSize={"20px"} mb="5px" fontWeight={600}>
             Create your username and password
           </Text>
           <Text>
@@ -173,29 +171,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
-// {
-/* <Input
-          as={"input"}
-          // name="name"
-          name="email"
-          placeholder="Email"
-          type="text"
-          borderRadius={"30px"}
-          bg={"#EDEFF1"}
-          // _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
-          // required
-          // focusBorderColor="lime"
-          height={"50px"}
-          width={"100%"}
-          value={values.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          borderWidth={"1px"}
-          // borderColor={"red"}
-          // focusBorderColor="blue"
-          // focusBorderColor="red"
-          focusBorderColor={
-            errors && touched ? "red.300" : "lime"
-          }
-        /> */
-// }
+
