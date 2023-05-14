@@ -2,40 +2,60 @@ import React, { useState } from "react";
 import { Input, Button, Text, Stack } from "@chakra-ui/react";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { useSetRecoilState } from "recoil";
+import * as yup from "yup";
+import { Formik, useFormik } from "formik";
 const Login = () => {
-  const [loginForm, setLoginForm] = useState({
-    username: "",
-    password: "",
+  const validateSchema = yup.object().shape({
+    username: yup
+      .string()
+      .min(3)
+      .max(20)
+      .required("Username must be between 3 and 20 characters"),
   });
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginForm((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
-  };
+  const {
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    errors,
+    values,
+    touched,
+    isValid,
+    dirty,
+  } = useFormik({
+    initialValues: {
+      username: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+    validationSchema: validateSchema
+  });
   const setAuthModalState = useSetRecoilState(AuthModalState);
   return (
     <Stack>
-      <form action="">
-        <Input
-          name="username"
-          placeholder="Username"
+      <form onSubmit={handleSubmit}>
+        <input
           type="text"
-          borderRadius={"30px"}
-          // mb="5px"
-          bg={"#EDEFF1"}
-          _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
-          onChange={onChange}
-          required
-          height={"50px"}
-          maxLength={20}
+          name="username"
+          style={{
+            background: "#EDEFF1",
+            height: "50px",
+            width: "100%",
+            borderRadius: "20px",
+            outline: "none",
+            padding: "10px 50px",
+            borderColor: `${errors.username && touched.username ? "red" : ""}`,
+            borderWidth: "2px",
+          }}
+          placeholder="Email"
+          value={values.username}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
-        {loginForm.username.length < 3 && (
-          <span style={{ color: "red", fontSize: "14px", marginLeft: "20px" }}>
-            Username must be between 3 and 20 characters
-          </span>
-        )}
+        {
+          errors.username && touched.username && <Text color="red">{errors.username }</Text>
+        }
+       
 
         <Input
           name="password"
@@ -43,14 +63,10 @@ const Login = () => {
           type="password"
           borderRadius={"30px"}
           _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
-          onChange={onChange}
           required
           height={"50px"}
           mt="15px"
-          // bg={`${loginForm.password === "" ?"#EDEFF1" : "#E8FOFE" }`}
-          // bg={`${loginForm.password === "" ? "#EDEFF1" : "red"}`}
         />
-    
 
         <Text fontSize={"16px"} pt="20px">
           Forgot your{" "}
@@ -108,3 +124,15 @@ const Login = () => {
 };
 
 export default Login;
+
+//  <Input
+//    name="username"
+//    placeholder="Username"
+//    type="text"
+//    borderRadius={"30px"}
+//    bg={"#EDEFF1"}
+//    _focus={{ borderColor: "red", borderWidth: "0px", outline: "none" }}
+//    required
+//    height={"50px"}
+//    maxLength={20}
+//  />;
