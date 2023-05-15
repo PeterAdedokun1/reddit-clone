@@ -19,14 +19,16 @@ import { FIREBASE_ERROS } from "../../../../firebase/error";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
-  const [createUserWithEmailAndPassword, user, loading, error ] =
+  const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const [stepCount, SetStepCount] = useState(0);
-  const validateSchema = yup.object().shape({
+  const validateSchemaEmail = yup.object().shape({
     email: yup
       .string()
       .email("Not a valid email address")
       .required("Please enter an email address to continue"),
+  });
+  const validateSchemaUser = yup.object().shape({
     username: yup
       .string()
       .min(3)
@@ -52,14 +54,14 @@ const SignUp = () => {
       password: "",
     },
     onSubmit: () => {},
-    validationSchema: validateSchema,
+    validationSchema: validateSchemaEmail || validateSchemaUser,
   });
 
   const onSubmitt = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(values.username, values.password,);
+    createUserWithEmailAndPassword(values.username, values.password);
   };
-console.log(errors , dirty)
+  console.log(isValid);
   return (
     <>
       {stepCount === 0 && (
@@ -93,7 +95,7 @@ console.log(errors , dirty)
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {isValid && dirty && (
+                {isValid && dirty && touched && (
                   <InputRightElement>
                     <CheckIcon color="green.500" />
                   </InputRightElement>
@@ -110,9 +112,7 @@ console.log(errors , dirty)
                 {errors.email}
               </Text>
             )}
-            {
-              errors && dirty && <Text>This is valid</Text>
-}
+
             <Button
               width={"100%"}
               bg="#ff4500"
@@ -176,9 +176,7 @@ console.log(errors , dirty)
                 value={values.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                // value={username}
-
-                // onChange={(e) => setUsername(e.target.value)}
+               
               />
               {errors.username && (
                 <Text
@@ -222,7 +220,6 @@ console.log(errors , dirty)
               style={{
                 width: "100%",
                 background: "#ff4500",
-                opacity: `${isValid && dirty ? "1" : "0.3"}`,
                 marginTop: "30px",
                 marginBottom: "30px",
                 height: "40px",
@@ -232,9 +229,6 @@ console.log(errors , dirty)
                 fontWeight: "bold",
               }}
               isLoading={loading}
-              // disabled={isSubmitting}
-              // disabled={!(isValid && dirty)}
-              // onClick={() => SetStepCount(stepCount + 1)}
               onClick={onSubmitt}
             >
               continue

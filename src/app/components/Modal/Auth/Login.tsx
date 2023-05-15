@@ -1,5 +1,15 @@
 import React, { useState } from "react";
-import { Input, Button, Text, Stack ,Box, InputGroup, InputRightElement, Flex, Image} from "@chakra-ui/react";
+import {
+  Input,
+  Button,
+  Text,
+  Stack,
+  Box,
+  InputGroup,
+  InputRightElement,
+  Flex,
+  Image,
+} from "@chakra-ui/react";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { useSetRecoilState } from "recoil";
 import * as yup from "yup";
@@ -9,15 +19,15 @@ import OAuthButton from "./OAuthButton";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../../../firebase/clientApp";
+import { FIREBASE_ERROS } from "@/firebase/error";
 const Login = () => {
   const validateSchema = yup.object().shape({
     username: yup
       .string()
       .min(3)
-      .max(20)
+    
       .required("Username must be between 3 and 20 characters"),
-    password: yup.string().min(6).required("password is required")
-  })
+  });
   const {
     handleBlur,
     handleChange,
@@ -63,9 +73,7 @@ const Login = () => {
                 borderRadius: "20px",
                 outline: "none",
                 padding: "0px 10px",
-                borderColor: `${
-                  errors.username && touched.username ? "red" : ""
-                }`,
+                borderColor: `${errors.username ? "red" : ""}`,
                 borderWidth: "2px",
               }}
               placeholder="Username"
@@ -79,9 +87,7 @@ const Login = () => {
               </InputRightElement>
             )}
           </InputGroup>
-          {
-            isValid && dirty && <Text>kkskskskks</Text>
-          }
+
           {errors.username && touched.username && (
             <Text
               color="red"
@@ -106,7 +112,11 @@ const Login = () => {
           onChange={handleChange}
           onBlur={handleBlur}
         />
-
+        {error && (
+          <Text fontSize={"12px"} color={"red"}>
+            {FIREBASE_ERROS[error.message as keyof typeof FIREBASE_ERROS]}
+          </Text>
+        )}
         <Text fontSize={"13px"} pt="20px">
           Forgot your{" "}
           <span
