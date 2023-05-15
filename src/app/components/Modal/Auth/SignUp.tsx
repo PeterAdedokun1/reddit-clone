@@ -90,7 +90,8 @@ const SignUp = () => {
                 height: "40px",
                 borderRadius: "20px",
                 color: "white",
-                fontSize: "20px",
+                fontSize: "14px",
+                fontWeight: "bold"
               }}
               // disabled={isSubmitting}
               disabled={!(isValid && dirty)}
