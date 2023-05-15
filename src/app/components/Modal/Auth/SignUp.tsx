@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Text,  Input,  Stack,Box } from "@chakra-ui/react";
+import { Text,  Input,  Stack,Box, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import * as yup from "yup";
 import { Formik, useFormik } from "formik";
+import { CheckIcon } from "@chakra-ui/icons";
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
   const [stepCount, SetStepCount] = useState(0)
@@ -43,24 +44,31 @@ const SignUp = () => {
             style={{ width: "100%" }}
           >
             <Box width={"100%"}>
-              <input
-                type="text"
-                name="email"
-                style={{
-                  background: "#EDEFF1",
-                  height: "50px",
-                  borderRadius: "20px",
-                  outline: "none",
-                  width: "300px",
-                  padding: "0px 10px",
-                  borderColor: `${errors.email ? "red" : ""}`,
-                  borderWidth: "2px",
-                }}
-                placeholder="Email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
+              <InputGroup>
+                <input
+                  type="text"
+                  name="email"
+                  style={{
+                    background: "#EDEFF1",
+                    height: "50px",
+                    borderRadius: "20px",
+                    outline: "none",
+                    width: "300px",
+                    padding: "0px 10px",
+                    borderColor: `${errors.email ? "red" : ""}`,
+                    borderWidth: "2px",
+                  }}
+                  placeholder="Email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {isValid && dirty && (
+                  <InputRightElement>
+                    <CheckIcon color="green.500" />
+                  </InputRightElement>
+                )}
+              </InputGroup>
             </Box>
             {errors.email && (
               <Text

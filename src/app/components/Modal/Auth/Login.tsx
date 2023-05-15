@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Input, Button, Text, Stack ,Box} from "@chakra-ui/react";
+import { Input, Button, Text, Stack ,Box, InputGroup, InputRightElement} from "@chakra-ui/react";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { useSetRecoilState } from "recoil";
 import * as yup from "yup";
 import { Formik, useFormik } from "formik";
+import { CheckIcon } from "@chakra-ui/icons";
 const Login = () => {
   const validateSchema = yup.object().shape({
     username: yup
@@ -37,31 +38,38 @@ const Login = () => {
         Login
       </Text>
       <Text fontSize={"13px"} mb="20px">
-        By continuing, you are setting up a Reddit account and agree to our
-        User Agreement and Privacy Policy.
+        By continuing, you are setting up a Reddit account and agree to our User
+        Agreement and Privacy Policy.
       </Text>
       <form onSubmit={handleSubmit}>
         <Box width={"100%"}>
-          <input
-            type="text"
-            name="username"
-            style={{
-              background: "#EDEFF1",
-              height: "50px",
-              width: "300px",
-              borderRadius: "20px",
-              outline: "none",
-              padding: "0px 10px",
-              borderColor: `${
-                errors.username && touched.username ? "red" : ""
-              }`,
-              borderWidth: "2px",
-            }}
-            placeholder="Email"
-            value={values.username}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+          <InputGroup>
+            <input
+              type="text"
+              name="username"
+              style={{
+                background: "#EDEFF1",
+                height: "50px",
+                width: "300px",
+                borderRadius: "20px",
+                outline: "none",
+                padding: "0px 10px",
+                borderColor: `${
+                  errors.username && touched.username ? "red" : ""
+                }`,
+                borderWidth: "2px",
+              }}
+              placeholder="Email"
+              value={values.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {isValid && dirty && touched && (
+              <InputRightElement>
+                <CheckIcon color="green.500" />
+              </InputRightElement>
+            )}
+          </InputGroup>
           {errors.username && touched.username && (
             <Text
               color="red"
