@@ -86,8 +86,7 @@ const ResetUsername = () => {
             width: "100%",
             background: "#ff4500",
             opacity: `${isValid && dirty ? "1" : "0.3"}`,
-            marginTop: "30px",
-            marginBottom: "30px",
+            marginTop: "15px",
             height: "40px",
             borderRadius: "20px",
             color: "white",
@@ -126,7 +125,6 @@ const ResetUsername = () => {
             color: "#0079D3",
             fontWeight: "bolder",
             cursor: "pointer",
-            // marginLeft: "10px",
           }}
           onClick={() =>
             setAuthModalState((prev) => ({
