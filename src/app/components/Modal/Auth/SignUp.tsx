@@ -21,8 +21,6 @@ const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
   const [createUserWithEmailAndPassword, user, loading, error ] =
     useCreateUserWithEmailAndPassword(auth);
-  const [username, setUsername] = useState("")
-  const [password , setPassword] = useState("")
   const [stepCount, SetStepCount] = useState(0);
   const validateSchema = yup.object().shape({
     email: yup
@@ -220,9 +218,8 @@ const SignUp = () => {
               />
             </Stack>
             {error && (
-              <Text fontSize={"10px"} color={"red"}>
+              <Text fontSize={"12px"} color={"red"}>
                 {FIREBASE_ERROS[error.message as keyof typeof FIREBASE_ERROS] }
-                {/* {error.message} */}
               </Text>
             )}
             <Button
