@@ -7,7 +7,6 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  Image,
 } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
@@ -15,17 +14,15 @@ import * as yup from "yup";
 import { Formik, useFormik } from "formik";
 import { CheckIcon } from "@chakra-ui/icons";
 import OAuthButton from "./OAuthButton";
+import { auth } from "../../../../firebase/clientApp";
+import { FIREBASE_ERROS } from "../../../../firebase/error";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import {
-  Auth,
-  AuthError,
-  createUserWithEmailAndPassword as firebaseCreateUserWithEmailAndPassword,
-  sendEmailVerification,
-  UserCredential,
-} from "firebase/auth";
-import { auth } from "@/firebase/clientApp";
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
+  const [createUserWithEmailAndPassword, user, loading, error ] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [username, setUsername] = useState("")
+  const [password , setPassword] = useState("")
   const [stepCount, SetStepCount] = useState(0);
   const validateSchema = yup.object().shape({
     email: yup
@@ -37,6 +34,7 @@ const SignUp = () => {
       .min(3)
       .max(20)
       .required("Username must be between 3 and 20 characters"),
+    password: yup.string().required("password is required"),
   });
 
   const {
@@ -53,19 +51,17 @@ const SignUp = () => {
     initialValues: {
       email: "",
       username: "",
+      password: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: () => {},
     validationSchema: validateSchema,
   });
 
-  
-
-  const [user, createUserWithEmailAndPassword, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
-  const onSubmit = () => {
+  const onSubmitt = async (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(values.username, values.password,);
   };
+
   return (
     <>
       {stepCount === 0 && (
@@ -78,11 +74,7 @@ const SignUp = () => {
             User Agreement and Privacy Policy.
           </Text>
           <OAuthButton />
-          <form
-            onSubmit={handleSubmit}
-            autoComplete="off"
-            style={{ width: "100%" }}
-          >
+          <form autoComplete="off" style={{ width: "100%" }}>
             <Box width={"100%"}>
               <InputGroup>
                 <input
@@ -134,7 +126,7 @@ const SignUp = () => {
                 fontWeight: "bold",
               }}
               // disabled={isSubmitting}
-              disabled={!(isValid && dirty)}
+              // disabled={!(isValid && dirty)}
               onClick={() => SetStepCount(stepCount + 1)}
             >
               continue
@@ -163,83 +155,99 @@ const SignUp = () => {
         </Stack>
       )}
       {stepCount === 1 && (
-        <Stack>
-          <Text fontSize={"20px"} mb="5px" fontWeight={600}>
-            Create your username and password
-          </Text>
-          <Text fontSize={"13px"}>
-            Reddit is anonymous, so your username is what you’ll go by here.
-            Choose wisely—because once you get a name, you can’t change it.
-          </Text>
-          <Box width={"100%"} pt="10px">
-            <input
-              type="text"
-              name="Username"
-              style={{
-                background: "#EDEFF1",
-                height: "50px",
-                width: "300px",
-                borderRadius: "20px",
-                outline: "none",
-                padding: "0px 10px",
+        <form>
+          <Stack>
+            <Text fontSize={"20px"} mb="5px" fontWeight={600}>
+              Create your username and password
+            </Text>
+            <Text fontSize={"13px"}>
+              Reddit is anonymous, so your username is what you’ll go by here.
+              Choose wisely—because once you get a name, you can’t change it.
+            </Text>
+            <Box width={"100%"} pt="10px">
+              <input
+                type="text"
+                name="username"
+                style={{
+                  background: "#EDEFF1",
+                  height: "50px",
+                  width: "300px",
+                  borderRadius: "20px",
+                  outline: "none",
+                  padding: "0px 10px",
 
-                borderWidth: "2px",
-              }}
-              placeholder="Username"
-              value={values.username}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.username && touched.username && (
-              <Text
-                color="red"
-                fontSize={"12px"}
-                display={"flex"}
-                alignItems={"center"}
-              >
-                {errors.username}
+                  borderWidth: "2px",
+                }}
+                placeholder="Username"
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                // value={username}
+
+                // onChange={(e) => setUsername(e.target.value)}
+              />
+              {errors.username && touched.username && (
+                <Text
+                  color="red"
+                  fontSize={"12px"}
+                  display={"flex"}
+                  alignItems={"center"}
+                >
+                  {errors.username}
+                </Text>
+              )}
+            </Box>
+
+            <Stack>
+              <input
+                name="password"
+                placeholder="Password"
+                type="password"
+                style={{
+                  background: "#EDEFF1",
+                  height: "50px",
+                  width: "300px",
+                  borderRadius: "20px",
+                  outline: "none",
+                  padding: "0px 10px",
+                  borderWidth: "2px",
+                }}
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+                height={"50px"}
+              />
+            </Stack>
+            {error && (
+              <Text fontSize={"10px"} color={"red"}>
+                {FIREBASE_ERROS[error.message as keyof typeof FIREBASE_ERROS] }
+                {/* {error.message} */}
               </Text>
             )}
-          </Box>
-          <Stack>
-            <input
-              name="password"
-              placeholder="Password"
-              type="password"
+            <Button
               style={{
-                background: "#EDEFF1",
-                height: "50px",
-                width: "300px",
+                width: "100%",
+                background: "#ff4500",
+                opacity: `${isValid && dirty ? "1" : "0.3"}`,
+                marginTop: "30px",
+                marginBottom: "30px",
+                height: "40px",
                 borderRadius: "20px",
-                outline: "none",
-                padding: "0px 10px",
-
-                borderWidth: "2px",
+                color: "white",
+                fontSize: "14px",
+                fontWeight: "bold",
               }}
-              required
-              height={"50px"}
-            />
+              isLoading={loading}
+              // disabled={isSubmitting}
+              // disabled={!(isValid && dirty)}
+              // onClick={() => SetStepCount(stepCount + 1)}
+              onClick={onSubmitt}
+            >
+              continue
+            </Button>
           </Stack>
-          <button
-            style={{
-              width: "100%",
-              background: "#ff4500",
-              opacity: `${isValid && dirty ? "1" : "0.3"}`,
-              marginTop: "30px",
-              marginBottom: "30px",
-              height: "40px",
-              borderRadius: "20px",
-              color: "white",
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-            // disabled={isSubmitting}
-            disabled={!(isValid && dirty)}
-            onClick={() => SetStepCount(stepCount + 1)}
-          >
-            continue
-          </button>
-        </Stack>
+        </form>
       )}
     </>
   );

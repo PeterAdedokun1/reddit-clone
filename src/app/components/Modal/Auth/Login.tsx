@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { Formik, useFormik } from "formik";
 import { CheckIcon } from "@chakra-ui/icons";
 import OAuthButton from "./OAuthButton";
+import BeatLoader from "react-spinners/BeatLoader";
 const Login = () => {
   const validateSchema = yup.object().shape({
     username: yup
@@ -138,6 +139,9 @@ const Login = () => {
           _hover={{ background: "#ff4500" }}
           opacity={`${isValid && dirty ? "1" : "0.3"}`}
           disabled={!(isValid && dirty)}
+          // isLoading={true}
+           spinner={<BeatLoader size={8} color='white' />}
+          
         >
           Login
         </Button>
