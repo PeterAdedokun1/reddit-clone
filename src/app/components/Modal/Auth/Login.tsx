@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Text, Stack } from "@chakra-ui/react";
+import { Input, Button, Text, Stack ,Box} from "@chakra-ui/react";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { useSetRecoilState } from "recoil";
 import * as yup from "yup";
@@ -33,31 +33,46 @@ const Login = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
   return (
     <Stack>
+      <Text fontSize={"20px"} mb="5px" fontWeight={600}>
+        Login
+      </Text>
+      <Text fontSize={"13px"} mb="20px">
+        By continuing, you are setting up a Reddit account and agree to our
+        User Agreement and Privacy Policy.
+      </Text>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          style={{
-            background: "#EDEFF1",
-            height: "50px",
-            width: "100%",
-            borderRadius: "20px",
-            outline: "none",
-            padding: "10px 50px",
-            borderColor: `${errors.username && touched.username ? "red" : ""}`,
-            borderWidth: "2px",
-          }}
-          placeholder="Email"
-          value={values.username}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {errors.username && touched.username && (
-          <Text color="red" fontSize={"12px"}>
-            {errors.username}
-          </Text>
-        )}
-
+        <Box width={"100%"}>
+          <input
+            type="text"
+            name="username"
+            style={{
+              background: "#EDEFF1",
+              height: "50px",
+              width: "300px",
+              borderRadius: "20px",
+              outline: "none",
+              padding: "0px 10px",
+              borderColor: `${
+                errors.username && touched.username ? "red" : ""
+              }`,
+              borderWidth: "2px",
+            }}
+            placeholder="Email"
+            value={values.username}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.username && touched.username && (
+            <Text
+              color="red"
+              fontSize={"12px"}
+              display={"flex"}
+              alignItems={"center"}
+            >
+              {errors.username}
+            </Text>
+          )}
+        </Box>
         <Input
           name="password"
           placeholder="Password"
@@ -78,7 +93,6 @@ const Login = () => {
               fontWeight: "bolder",
               cursor: "pointer",
             }}
-
             onClick={() =>
               setAuthModalState((prev) => ({
                 ...prev,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text,  Input,  Stack } from "@chakra-ui/react";
+import { Text,  Input,  Stack,Box } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import * as yup from "yup";
@@ -42,30 +42,41 @@ const SignUp = () => {
             autoComplete="off"
             style={{ width: "100%" }}
           >
-            <input
-              type="text"
-              name="email"
-              style={{
-                background: "#EDEFF1",
-                height: "50px",
-                width: "100%",
-                borderRadius: "20px",
-                outline: "none",
-                padding: "10px 50px",
-                borderColor: `${errors.email ? "red" : ""}`,
-                borderWidth: "2px",
-              }}
-              placeholder="Email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.email && <Text color={"red"} fontSize={"12px"}>{errors.email}</Text>}
-            {isValid && dirty && <Text fontSize={"12px"}>This is valid</Text>}
+            <Box width={"100%"}>
+              <input
+                type="text"
+                name="email"
+                style={{
+                  background: "#EDEFF1",
+                  height: "50px",
+                  borderRadius: "20px",
+                  outline: "none",
+                  width: "300px",
+                  padding: "0px 10px",
+                  borderColor: `${errors.email ? "red" : ""}`,
+                  borderWidth: "2px",
+                }}
+                placeholder="Email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Box>
+            {errors.email && (
+              <Text
+                color={"red"}
+                fontSize={"12px"}
+                display={"flex"}
+                alignItems={"center"}
+              >
+                {errors.email}
+              </Text>
+            )}
             <button
               style={{
                 width: "100%",
-                background: `${isValid && dirty ? "red" : "blue"}`,
+                background: "#ff4500",
+                opacity: `${isValid && dirty ? "1" : "0.3"}`,
                 marginTop: "30px",
                 marginBottom: "30px",
                 height: "40px",
@@ -107,31 +118,41 @@ const SignUp = () => {
           <Text fontSize={"20px"} mb="5px" fontWeight={600}>
             Create your username and password
           </Text>
-          <Text>
+          <Text fontSize={"13px"}>
             Reddit is anonymous, so your username is what you’ll go by here.
             Choose wisely—because once you get a name, you can’t change it.
           </Text>
-          <input
-            type="text"
-            name="username"
-            style={{
-              background: "#EDEFF1",
-              height: "50px",
-              width: "100%",
-              borderRadius: "20px",
-              outline: "none",
-              padding: "10px 50px",
-              // borderColor: `${
-              //   errors.username && touched.username ? "red" : ""
-              // }`,
-              borderWidth: "2px",
-            }}
-            placeholder="Email"
-            // value={values.username}
-            // onChange={handleChange}
-            // onBlur={handleBlur}
-          />
-          <Stack pt="20px">
+          <Box width={"100%"} pt="10px">
+            <input
+              type="text"
+              name="Username"
+              style={{
+                background: "#EDEFF1",
+                height: "50px",
+                width: "300px",
+                borderRadius: "20px",
+                outline: "none",
+                padding: "0px 10px",
+
+                borderWidth: "2px",
+              }}
+              placeholder="Email"
+              // value={values.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {/* {errors.username && touched.username && ( */}
+            <Text
+              color="red"
+              fontSize={"12px"}
+              display={"flex"}
+              alignItems={"center"}
+            >
+              {/* {errors.username} */}
+            </Text>
+            {/* )} */}
+          </Box>
+          <Stack>
             <Input
               name="password"
               placeholder="Password"
