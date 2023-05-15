@@ -59,7 +59,7 @@ const SignUp = () => {
     e.preventDefault();
     createUserWithEmailAndPassword(values.username, values.password,);
   };
-
+console.log(errors , dirty)
   return (
     <>
       {stepCount === 0 && (
@@ -110,25 +110,21 @@ const SignUp = () => {
                 {errors.email}
               </Text>
             )}
-            <button
-              style={{
-                width: "100%",
-                background: "#ff4500",
-                opacity: `${isValid && dirty ? "1" : "0.3"}`,
-                marginTop: "30px",
-                marginBottom: "30px",
-                height: "40px",
-                borderRadius: "20px",
-                color: "white",
-                fontSize: "14px",
-                fontWeight: "bold",
-              }}
-              // disabled={isSubmitting}
-              // disabled={!(isValid && dirty)}
+            {
+              errors && dirty && <Text>This is valid</Text>
+}
+            <Button
+              width={"100%"}
+              bg="#ff4500"
+              my="30px"
+              _hover={{ background: "#ff4500" }}
+              opacity={`${isValid && dirty ? "1" : "0.3"}`}
+              isDisabled={!(isValid && dirty)}
+              isLoading={loading}
               onClick={() => SetStepCount(stepCount + 1)}
             >
-              continue
-            </button>
+              Continue
+            </Button>
           </form>
           <Text fontSize={"13px"}>
             Already a redditor
@@ -184,7 +180,7 @@ const SignUp = () => {
 
                 // onChange={(e) => setUsername(e.target.value)}
               />
-              {errors.username && touched.username && (
+              {errors.username && (
                 <Text
                   color="red"
                   fontSize={"12px"}
@@ -219,7 +215,7 @@ const SignUp = () => {
             </Stack>
             {error && (
               <Text fontSize={"12px"} color={"red"}>
-                {FIREBASE_ERROS[error.message as keyof typeof FIREBASE_ERROS] }
+                {FIREBASE_ERROS[error.message as keyof typeof FIREBASE_ERROS]}
               </Text>
             )}
             <Button

@@ -7,6 +7,8 @@ import { Formik, useFormik } from "formik";
 import { CheckIcon } from "@chakra-ui/icons";
 import OAuthButton from "./OAuthButton";
 import BeatLoader from "react-spinners/BeatLoader";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../../../firebase/clientApp";
 const Login = () => {
   const validateSchema = yup.object().shape({
     username: yup
@@ -14,7 +16,8 @@ const Login = () => {
       .min(3)
       .max(20)
       .required("Username must be between 3 and 20 characters"),
-  });
+    password: yup.string().min(6).required("password is required")
+  })
   const {
     handleBlur,
     handleChange,
@@ -27,6 +30,7 @@ const Login = () => {
   } = useFormik({
     initialValues: {
       username: "",
+      password: "",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -34,6 +38,8 @@ const Login = () => {
     validationSchema: validateSchema,
   });
   const setAuthModalState = useSetRecoilState(AuthModalState);
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
   return (
     <Stack>
       <Text fontSize={"20px"} mb="5px" fontWeight={600}>
@@ -43,7 +49,7 @@ const Login = () => {
         By continuing, you are setting up a Reddit account and agree to our User
         Agreement and Privacy Policy.
       </Text>
-      <OAuthButton/>
+      <OAuthButton />
       <form onSubmit={handleSubmit}>
         <Box width={"100%"}>
           <InputGroup>
@@ -73,6 +79,9 @@ const Login = () => {
               </InputRightElement>
             )}
           </InputGroup>
+          {
+            isValid && dirty && <Text>kkskskskks</Text>
+          }
           {errors.username && touched.username && (
             <Text
               color="red"
@@ -93,6 +102,9 @@ const Login = () => {
           required
           height={"50px"}
           mt="15px"
+          value={values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
 
         <Text fontSize={"13px"} pt="20px">
@@ -138,10 +150,11 @@ const Login = () => {
           my="30px"
           _hover={{ background: "#ff4500" }}
           opacity={`${isValid && dirty ? "1" : "0.3"}`}
-          disabled={!(isValid && dirty)}
-          // isLoading={true}
-           spinner={<BeatLoader size={8} color='white' />}
-          
+          isDisabled={!(isValid && dirty)}
+          isLoading={loading}
+          onClick={() =>
+            signInWithEmailAndPassword(values.username, values.password)
+          }
         >
           Login
         </Button>
