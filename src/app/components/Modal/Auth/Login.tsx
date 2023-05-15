@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Input, Button, Text, Stack ,Box, InputGroup, InputRightElement} from "@chakra-ui/react";
+import { Input, Button, Text, Stack ,Box, InputGroup, InputRightElement, Flex, Image} from "@chakra-ui/react";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { useSetRecoilState } from "recoil";
 import * as yup from "yup";
 import { Formik, useFormik } from "formik";
 import { CheckIcon } from "@chakra-ui/icons";
+import OAuthButton from "./OAuthButton";
 const Login = () => {
   const validateSchema = yup.object().shape({
     username: yup
@@ -41,6 +42,7 @@ const Login = () => {
         By continuing, you are setting up a Reddit account and agree to our User
         Agreement and Privacy Policy.
       </Text>
+      <OAuthButton/>
       <form onSubmit={handleSubmit}>
         <Box width={"100%"}>
           <InputGroup>
@@ -59,7 +61,7 @@ const Login = () => {
                 }`,
                 borderWidth: "2px",
               }}
-              placeholder="Email"
+              placeholder="Username"
               value={values.username}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -134,6 +136,8 @@ const Login = () => {
           bg="#ff4500"
           my="30px"
           _hover={{ background: "#ff4500" }}
+          opacity={`${isValid && dirty ? "1" : "0.3"}`}
+          disabled={!(isValid && dirty)}
         >
           Login
         </Button>

@@ -13,6 +13,7 @@ import {
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { useRecoilState } from "recoil";
 import AuthInput from "./AuthInput";
+import OAuthButton from "./OAuthButton";
 const AuthModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(AuthModalState);
   const handleClose = () => {
@@ -34,7 +35,8 @@ const AuthModal: React.FC = () => {
           <ModalCloseButton />
           <ModalBody my="30px" mx={"50px"}>
             <Flex direction={"column"} align={"center"} justify={"center"}>
-              {/* <OAuthButtons/> */}
+              {/* <OAuthButton /> */}
+
               <AuthInput />
             </Flex>
           </ModalBody>

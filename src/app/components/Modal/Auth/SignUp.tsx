@@ -1,32 +1,71 @@
 import React, { useState } from "react";
-import { Text,  Input,  Stack,Box, InputGroup, InputRightElement } from "@chakra-ui/react";
+import {
+  Text,
+  Input,
+  Stack,
+  Box,
+  InputGroup,
+  InputRightElement,
+  Button,
+  Image,
+} from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import * as yup from "yup";
 import { Formik, useFormik } from "formik";
 import { CheckIcon } from "@chakra-ui/icons";
+import OAuthButton from "./OAuthButton";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  Auth,
+  AuthError,
+  createUserWithEmailAndPassword as firebaseCreateUserWithEmailAndPassword,
+  sendEmailVerification,
+  UserCredential,
+} from "firebase/auth";
+import { auth } from "@/firebase/clientApp";
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
-  const [stepCount, SetStepCount] = useState(0)
+  const [stepCount, SetStepCount] = useState(0);
   const validateSchema = yup.object().shape({
     email: yup
       .string()
       .email("Not a valid email address")
       .required("Please enter an email address to continue"),
+    username: yup
+      .string()
+      .min(3)
+      .max(20)
+      .required("Username must be between 3 and 20 characters"),
   });
 
-  const { handleBlur, handleChange, isSubmitting ,  handleSubmit, errors, values, touched , isValid ,dirty} =
-    useFormik({
-      initialValues: {
-        email: "",
-      },
-      onSubmit: (values) => {
-        console.log(values);
-      },
-      validationSchema: validateSchema,
-    });
+  const {
+    handleBlur,
+    handleChange,
+    isSubmitting,
+    handleSubmit,
+    errors,
+    values,
+    touched,
+    isValid,
+    dirty,
+  } = useFormik({
+    initialValues: {
+      email: "",
+      username: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+    validationSchema: validateSchema,
+  });
 
+  
 
+  const [user, createUserWithEmailAndPassword, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+  const onSubmit = () => {
+  };
   return (
     <>
       {stepCount === 0 && (
@@ -38,6 +77,7 @@ const SignUp = () => {
             By continuing, you are setting up a Reddit account and agree to our
             User Agreement and Privacy Policy.
           </Text>
+          <OAuthButton />
           <form
             onSubmit={handleSubmit}
             autoComplete="off"
@@ -91,7 +131,7 @@ const SignUp = () => {
                 borderRadius: "20px",
                 color: "white",
                 fontSize: "14px",
-                fontWeight: "bold"
+                fontWeight: "bold",
               }}
               // disabled={isSubmitting}
               disabled={!(isValid && dirty)}
@@ -145,32 +185,36 @@ const SignUp = () => {
 
                 borderWidth: "2px",
               }}
-              placeholder="Email"
-              // value={values.username}
+              placeholder="Username"
+              value={values.username}
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {/* {errors.username && touched.username && ( */}
-            <Text
-              color="red"
-              fontSize={"12px"}
-              display={"flex"}
-              alignItems={"center"}
-            >
-              {/* {errors.username} */}
-            </Text>
-            {/* )} */}
+            {errors.username && touched.username && (
+              <Text
+                color="red"
+                fontSize={"12px"}
+                display={"flex"}
+                alignItems={"center"}
+              >
+                {errors.username}
+              </Text>
+            )}
           </Box>
           <Stack>
-            <Input
+            <input
               name="password"
               placeholder="Password"
               type="password"
-              borderRadius={"30px"}
-              _focus={{
-                borderColor: "red",
-                borderWidth: "0px",
+              style={{
+                background: "#EDEFF1",
+                height: "50px",
+                width: "300px",
+                borderRadius: "20px",
                 outline: "none",
+                padding: "0px 10px",
+
+                borderWidth: "2px",
               }}
               required
               height={"50px"}
@@ -179,17 +223,19 @@ const SignUp = () => {
           <button
             style={{
               width: "100%",
-              background: `${isValid && dirty ? "red" : "blue"}`,
+              background: "#ff4500",
+              opacity: `${isValid && dirty ? "1" : "0.3"}`,
               marginTop: "30px",
               marginBottom: "30px",
               height: "40px",
               borderRadius: "20px",
               color: "white",
-              fontSize: "20px",
+              fontSize: "14px",
+              fontWeight: "bold",
             }}
             // disabled={isSubmitting}
-            // disabled={!(isValid && dirty)}
-            // onClick={() => SetStepCount(stepCount + 1)}
+            disabled={!(isValid && dirty)}
+            onClick={() => SetStepCount(stepCount + 1)}
           >
             continue
           </button>
@@ -200,4 +246,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
