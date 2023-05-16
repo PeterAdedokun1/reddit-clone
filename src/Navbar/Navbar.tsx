@@ -8,7 +8,12 @@ import Directory from "./Directory/Directory";
 const Navbar: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
   return (
-    <Flex bg="white" height={"47px"} padding="6px 20px" justify={"space-between"}>
+    <Flex
+      bg="white"
+      height={"47px"}
+      padding="6px 20px"
+      justify={"space-between"}
+    >
       <Flex align={"center"}>
         <Image src="./images/redditFace.svg" height={"30px"} />
         <Image
@@ -17,7 +22,7 @@ const Navbar: React.FC = () => {
           display={{ base: "none", md: "unset " }}
         />
       </Flex>
-      <Directory />
+      {user && <Directory />}
       <SearchInput />
       <RightContent user={user} />
     </Flex>

@@ -19,6 +19,7 @@ import { useSetRecoilState } from "recoil";
 import AuthModal from "@/app/components/Modal/Auth/AuthModal";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { TiHome } from "react-icons/ti";
+import Communities from "./Communities";
 type UserMenu = {
   user?: User | null;
 };
@@ -58,7 +59,9 @@ const Directory: React.FC<UserMenu> = ({ user }) => {
           </Box>
         </Box>
       </MenuButton>
-      <MenuList>asdfasfasd</MenuList>
+          <MenuList>
+              <Communities/>
+      </MenuList>
     </Menu>
   );
 };
