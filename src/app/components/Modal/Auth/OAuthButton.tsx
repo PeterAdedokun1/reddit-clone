@@ -1,16 +1,49 @@
-import { Button, Flex, Image } from '@chakra-ui/react'
+import { Button, Flex, Image, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
-import { useSignInWithGoogle } from "react-firebase-hooks/auth"
+import { useSignInWithApple, useSignInWithGoogle } from "react-firebase-hooks/auth"
 import {auth} from "../../../../firebase/clientApp"
 const OAuthButton = () => {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithApple, ] = useSignInWithApple(auth);
   return (
-    <Flex>
-      <Button fontWeight={"medium"} width={"300px"} variant={"outline"} isLoading={loading} onClick={() => signInWithGoogle()}>
-        <Image objectFit={"contain"} src="./images/googlelogo.png" height={"20px"} mr={"50px"} p={0} />
-        Continue with Google
+    <Stack>
+      <Button
+        fontWeight={"medium"}
+        width={"300px"}
+        variant={"outline"}
+        isLoading={loading}
+        display={"flex"}
+        justifyContent={loading ? "center" : "flex-start"}
+        onClick={() => signInWithGoogle()}
+      >
+        <Image
+          objectFit={"contain"}
+          src="./images/googlelogo.png"
+          height={"20px"}
+          p={0}
+          mr={"50px"}
+        />
+        <Text>Continue with Google</Text>
       </Button>
-    </Flex>
+      {/* <Button
+        fontWeight={"medium"}
+        width={"300px"}
+        variant={"outline"}
+        isLoading={loading}
+        display={"flex"}
+        justifyContent={loading ? "center" : "flex-start"}
+        onClick={() => signInWithApple()}
+      >
+        <Image
+          objectFit={"contain"}
+          src="./images/googlelogo.png"
+          height={"20px"}
+          p={0}
+          mr={"50px"}
+        />
+        <Text>Continue with with apple</Text>
+      </Button> */}
+    </Stack>
   );
 }
 
