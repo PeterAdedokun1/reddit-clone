@@ -7,8 +7,6 @@ import {
   Box,
   InputGroup,
   InputRightElement,
-  Flex,
-  Image,
 } from "@chakra-ui/react";
 import { AuthModalState } from "@/atoms/AuthModalAtom";
 import { useSetRecoilState } from "recoil";
@@ -16,7 +14,6 @@ import * as yup from "yup";
 import { Formik, useFormik } from "formik";
 import { CheckIcon } from "@chakra-ui/icons";
 import OAuthButton from "./OAuthButton";
-import BeatLoader from "react-spinners/BeatLoader";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../../../firebase/clientApp";
 import { FIREBASE_ERROS } from "@/firebase/error";
@@ -25,7 +22,6 @@ const Login = () => {
     username: yup
       .string()
       .min(3)
-    
       .required("Username must be between 3 and 20 characters"),
   });
   const {
