@@ -5,12 +5,17 @@ type SearchInput = {};
 
 const SearchInput: React.FC<SearchInput> = () => {
   return (
-    <Flex flexGrow={1} mr={2} align={"center"}>
+    <Flex
+      flexGrow={1}
+    
+      width={"700px"}
+      mr={2} align={"center"}>
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"
           color="gray.300"
           fontSize="1.2em"
+          
           children={<SearchIcon color={"gray.300"} />}
         />
         <Input

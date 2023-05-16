@@ -16,7 +16,7 @@ import { FaRedditSquare } from "react-icons/fa";
 import { VscAccount } from "react-icons/vsc";
 import { IoSparkles } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
-import {MdOutlineLogin} from "react-icons/md"
+import { MdOutlineLogin } from "react-icons/md";
 import { auth } from "@/firebase/clientApp";
 import { useSetRecoilState } from "recoil";
 import AuthModal from "@/app/components/Modal/Auth/AuthModal";
@@ -26,12 +26,13 @@ type UserMenu = {
 };
 
 const UserMenu: React.FC<UserMenu> = ({ user }) => {
-    const setAuthModalState = useSetRecoilState(AuthModalState)
+  const setAuthModalState = useSetRecoilState(AuthModalState);
   return (
     <Menu>
       <MenuButton
         cursor={"pointer"}
-        padding={"0px 6px"}
+        // padding={"0px 6px"}
+        p={0}
         borderRadius={4}
         _hover={{ outline: "1px solid ", outlineColor: "gray.200" }}
       >
@@ -44,23 +45,37 @@ const UserMenu: React.FC<UserMenu> = ({ user }) => {
                   fontSize={24}
                   mr="1"
                   color={"gray.300"}
-                              />
-                              <Flex direction={"column"} display={{ base: "none", lg: "flex" }} fontSize={"8pt"} align={"flex-start"} mr={8}>
-                                  <Text fontWeight={700}>
-                                      {user.displayName || user.email?.split("@")[0]}
-                                  </Text>
-                                  <Flex>
-                                      <Icon as={IoSparkles} color={"brand.100"} mr={1} />
-                                      <Text>1 karma</Text>
-                                  </Flex>
-                                  
-                              </Flex>
+                />
+                <Flex
+                  direction={"column"}
+                  display={{ base: "none", lg: "flex" }}
+                  fontSize={"8pt"}
+                  align={"flex-start"}
+                  mr={8}
+                >
+                  <Text fontWeight={700}>
+                    {user.displayName || user.email?.split("@")[0]}
+                  </Text>
+                  <Flex>
+                    <Icon as={IoSparkles} color={"brand.100"} mr={1} />
+                    <Text>1 karma</Text>
+                  </Flex>
+                </Flex>
               </>
             </Flex>
             <ChevronDownIcon />
           </Flex>
         ) : (
-          <Icon as={VscAccount} fontSize={24} color={"gray.400"} mr={1} />
+          <Icon
+            as={VscAccount}
+            fontSize={24}
+            color={"gray.400"}
+            mr={1}
+            ml={3}
+            mt={2}
+            p={0}
+          />
+          //   <Text>lssl</Text>
         )}
       </MenuButton>
       <MenuList>
@@ -88,7 +103,9 @@ const UserMenu: React.FC<UserMenu> = ({ user }) => {
               </Flex>
             </MenuItem>
             <MenuDivider />
-            <MenuItem onClick={() => setAuthModalState({open: true, View: "login"})}>
+            <MenuItem
+              onClick={() => setAuthModalState({ open: true, View: "login" })}
+            >
               <Flex align={"center"} onClick={() => signOut(auth)}>
                 <Icon as={MdOutlineLogin} mr={2} />
                 <Text>Log In / Sign In </Text>
