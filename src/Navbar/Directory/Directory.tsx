@@ -31,19 +31,25 @@ const Directory: React.FC<UserMenu> = ({ user }) => {
         cursor={"pointer"}
         borderRadius={4}
         _hover={{ outline: "1px solid ", outlineColor: "gray.200" }}
-        w={"250px"}
+        w={{ base: "fit-content", lg: "250px" }}
         ml="20px"
         mr="20px"
       >
         <Box
           display={"flex"}
-          justifyContent={"space-between"}
+          justifyContent={{ base: "flex-start", lg: "space-between" }}
           alignContent={"center"}
           width={"100%"}
         >
           <Flex align={"center"}>
             <Icon as={TiHome} fontSize={"30px"} />
-            <Text mt="3px" ml="5px" fontWeight={"semibold"} fontSize={"13px"}>
+            <Text
+              mt="3px"
+              ml="5px"
+              fontWeight={"semibold"}
+              fontSize={"13px"}
+              display={{ base: "none", lg: "block" }}
+            >
               Home
             </Text>
           </Flex>
@@ -58,13 +64,4 @@ const Directory: React.FC<UserMenu> = ({ user }) => {
 };
 
 export default Directory;
-{
-  /* <Stack>
-  <Flex align={"center"}>
-    <Flex align={"center"}>
-      <Icon as={TiHome} />
-      <Text>Home</Text>
-    </Flex>
-  </Flex>
-</Stack>; */
-}
+
