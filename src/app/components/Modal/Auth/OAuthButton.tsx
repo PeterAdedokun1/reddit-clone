@@ -1,10 +1,27 @@
-import { Button, Flex, Image, Stack, Text } from '@chakra-ui/react'
-import React from 'react'
-import { useSignInWithApple, useSignInWithGoogle } from "react-firebase-hooks/auth"
-import {auth} from "../../../../firebase/clientApp"
+import { Button, Flex, Image, Stack, Text } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import {
+  useSignInWithApple,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import { auth } from "../../../../firebase/clientApp";
+import { User } from "firebase/auth";
+import { Firestore, doc, setDoc } from "firebase/firestore";
+import { fireStore } from "../../../../firebase/clientApp";
 const OAuthButton = () => {
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-  const [signInWithApple, ] = useSignInWithApple(auth);
+  const [signInWithGoogle, userCred, loading, error] =
+    useSignInWithGoogle(auth);
+  const [signInWithApple] = useSignInWithApple(auth);
+
+  const createUserDocument = async (user: User) => {
+    const userDocRef = doc(fireStore, "users", user.uid);
+    await setDoc(userDocRef, JSON.parse(JSON.stringify(user)));
+  };
+  useEffect(() => {
+    if (userCred) {
+      createUserDocument(userCred.user);
+    }
+  }, [userCred]);
   return (
     <Stack>
       <Button
@@ -45,6 +62,6 @@ const OAuthButton = () => {
       </Button> */}
     </Stack>
   );
-}
+};
 
-export default OAuthButton
+export default OAuthButton;

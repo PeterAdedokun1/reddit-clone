@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   Input,
@@ -14,12 +14,14 @@ import * as yup from "yup";
 import { Formik, useFormik } from "formik";
 import { CheckIcon } from "@chakra-ui/icons";
 import OAuthButton from "./OAuthButton";
-import { auth } from "../../../../firebase/clientApp";
+import { auth, fireStore } from "../../../../firebase/clientApp";
 import { FIREBASE_ERROS } from "../../../../firebase/error";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { User } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(AuthModalState);
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, userCred , loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const [stepCount, SetStepCount] = useState(0);
   const validateSchemaEmail = yup.object().shape({
@@ -55,13 +57,21 @@ const SignUp = () => {
     },
     onSubmit: () => {},
     validationSchema: validateSchemaEmail || validateSchemaUser,
-  });
+  })
 
   const onSubmitt = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     createUserWithEmailAndPassword(values.username, values.password);
   };
-  console.log(isValid);
+
+  const createUserDocument = async (user: User) => {
+    await addDoc(collection(fireStore, "Users" ), JSON.parse(JSON.stringify(user)))
+  }
+  useEffect(() => {
+    if (userCred) {
+      createUserDocument(userCred.user)
+    }
+  },[userCred])
   return (
     <>
       {stepCount === 0 && (
