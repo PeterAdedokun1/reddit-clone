@@ -22,8 +22,14 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   handleClose,
 }) => {
 
-    const [communityName, setCommunityName] = useState("");
-
+  const [communityName, setCommunityName] = useState("");
+  const [charsRemaining, setCharsRemaining] = useState(21);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //recalculate
+    if (e.target.value.length > 21) return;
+    setCommunityName(e.target.value);
+    setCharsRemaining(21 - e.target.value.length)
+}
   return (
     <>
       <Modal isOpen={open} onClose={handleClose}>
@@ -52,16 +58,31 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
               <Text fontSize={11} color={"gray.500"}>
                 Community names including capitalization cannot be changed
               </Text>
-              <Text position={"relative"} top={"28px"} left={"10px"} width={"20px"} color={"gray.400"}>r/</Text>
-                          <Input position={"relative"} value={communityName} size={"sm"} pl={"22px"} onChange={() => {}}/>
-                          <Text>Chracters remaining</Text>
+              <Text
+                position={"relative"}
+                top={"28px"}
+                left={"10px"}
+                width={"20px"}
+                color={"gray.400"}
+              >
+                r/
+              </Text>
+              <Input
+                position={"relative"}
+                value={communityName}
+                size={"sm"}
+                pl={"22px"}
+                onChange={ handleChange}
+              />
+              <Text color={charsRemaining === 0 ? "red" : "gray.500"} fontSize={"9pt"} mt="10px">{charsRemaining}   Chracters remaining</Text>
+              <Box></Box>
             </ModalBody>
           </Box>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleClose}>
               Close
             </Button>
-            <Button variant="ghost">Create Community</Button>
+            <Button variant="ghost"> Create Community</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
